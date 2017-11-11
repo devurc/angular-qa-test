@@ -11,14 +11,11 @@ const user = {
 /*
 - Test register button for each input field
 - Register new user
+- Reigster new user with long input
 - Register new user with username in database
+- Register new user with username in database (Uppercase)
 - Cancel button
 */
-
-// Load web page and click register
-beforeEach(function() {
-  browser.get('http://localhost:8080');
-});
 
 // Clear Local Data
 afterEach(function() {
@@ -28,7 +25,7 @@ afterEach(function() {
 
 describe('Registration - empty inputs 0-0-0-0', function () {
   it('should leave register button disabled', function() {
-    element(by.linkText('Register')).click();
+    browser.get('http://localhost:8080/#!/register');
     // Send user info
     const registerBtn = element(by.css('[ng-disabled="form.$invalid || vm.dataLoading"]'));
     expect(registerBtn.isEnabled()).toBe(false);
@@ -37,7 +34,7 @@ describe('Registration - empty inputs 0-0-0-0', function () {
 
 describe('Registration - first name filled, rest empty 1-0-0-0', function () {
   it('should leave register button disabled', function() {
-    element(by.linkText('Register')).click();
+    browser.get('http://localhost:8080/#!/register');
     // Send user info
     element(by.id('firstName')).sendKeys(user.firstName);
     const registerBtn = element(by.css('[ng-disabled="form.$invalid || vm.dataLoading"]'));
@@ -47,7 +44,7 @@ describe('Registration - first name filled, rest empty 1-0-0-0', function () {
 
 describe('Registration - last name filled, rest empty 0-1-0-0', function () {
   it('should leave register button disabled', function() {
-    element(by.linkText('Register')).click();
+    browser.get('http://localhost:8080/#!/register');
     // Send user info
     $('[name="lastName"]').sendKeys(user.lastName);   
     const registerBtn = element(by.css('[ng-disabled="form.$invalid || vm.dataLoading"]'));
@@ -57,7 +54,7 @@ describe('Registration - last name filled, rest empty 0-1-0-0', function () {
 
 describe('Registration - user name filled, rest empty 0-0-1-0', function () {
   it('should leave register button disabled', function() { 
-    element(by.linkText('Register')).click();
+    browser.get('http://localhost:8080/#!/register');
     // Send user info
     element(by.id('username')).sendKeys(user.userName);
     const registerBtn = element(by.css('[ng-disabled="form.$invalid || vm.dataLoading"]'));
@@ -67,7 +64,7 @@ describe('Registration - user name filled, rest empty 0-0-1-0', function () {
 
 describe('Registration - password filled, rest empty 0-0-0-1', function () {
   it('should leave register button disabled', function() {  
-    element(by.linkText('Register')).click();
+    browser.get('http://localhost:8080/#!/register');
     // Send user info
     element(by.id('password')).sendKeys(user.passWord);
     const registerBtn = element(by.css('[ng-disabled="form.$invalid || vm.dataLoading"]'));
@@ -77,7 +74,7 @@ describe('Registration - password filled, rest empty 0-0-0-1', function () {
 
 describe('Registration - inputs filled 1-1-1-1', function () {
   it('should enable register button', function() {
-    element(by.linkText('Register')).click();
+    browser.get('http://localhost:8080/#!/register');
     // Send user info
     element(by.id('firstName')).sendKeys(user.firstName);
     $('[name="lastName"]').sendKeys(user.lastName);
@@ -91,7 +88,7 @@ describe('Registration - inputs filled 1-1-1-1', function () {
 
 describe('Registration - register new user', function () {
   it('should register a new user', function() {
-    element(by.linkText('Register')).click();
+    browser.get('http://localhost:8080/#!/register');
     // Send user info
     element(by.id('firstName')).sendKeys(user.firstName);
     $('[name="lastName"]').sendKeys(user.lastName);
@@ -108,7 +105,7 @@ describe('Registration - register new user', function () {
 
 describe('Registration - register new user with long input', function () {
   it('should register a new user', function() {
-    element(by.linkText('Register')).click();
+    browser.get('http://localhost:8080/#!/register');
     // Send user info
     element(by.id('firstName')).sendKeys('999999999999999999999999999999999999999999999999999');
     $('[name="lastName"]').sendKeys('%$&%^$&^%$&%$*%$(%$*%$&%$&%$&^%$&%^$%$&%$%$%&$%&$&%$%');
@@ -125,7 +122,7 @@ describe('Registration - register new user with long input', function () {
 
 describe('Registration - register taken user', function () {
   it('should throw a Username is already taken error', function() {
-    element(by.linkText('Register')).click();
+    browser.get('http://localhost:8080/#!/register');
     // Send user info
     element(by.id('firstName')).sendKeys(user.firstName);
     $('[name="lastName"]').sendKeys(user.lastName);
@@ -153,7 +150,7 @@ describe('Registration - register taken user', function () {
 
 describe('Registration - register taken user with username in uppercase', function () {
   it('should throw a Username is already taken error', function() {
-    element(by.linkText('Register')).click();
+    browser.get('http://localhost:8080/#!/register');
     // Send user info
     element(by.id('firstName')).sendKeys(user.firstName);
     $('[name="lastName"]').sendKeys(user.lastName);
@@ -182,12 +179,9 @@ describe('Registration - register taken user with username in uppercase', functi
 
 describe('Registration - cancel button', function () {
   it('should return user to login page', function() {
-    element(by.linkText('Register')).click();
-    
+    browser.get('http://localhost:8080/#!/register');
     element(by.linkText('Cancel')).click();
-
-    const EC = protractor.ExpectedConditions;
-    browser.wait(EC.urlContains('http://localhost:8080/#!/login'), 5000);  
+    expect(browser.getCurrentUrl()).toEqual('http://localhost:8080/#!/login');
   });
 });
 

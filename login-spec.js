@@ -25,13 +25,6 @@ beforeEach(function() {
   browser.get('http://localhost:8080');
 });
 
-// Clear Local Data
-afterEach(function() {
-  browser.executeScript('window.sessionStorage.clear();');
-  browser.executeScript('window.localStorage.clear();');
-});
-
-
 describe('Login - Page Title', function() {
   it('should have a title', function() {
 
@@ -77,31 +70,11 @@ describe('Login - Filled username and pasword input', function () {
   });
 });
 
-// ******************Figure this OUT
-// describe('Entering username and clearing username text field', function () {
-//   it('Username is required text should appear', function() {
-//     
-
-//     const userInput = element(by.id('username'));
-//     userInput.sendKeys(userName);
-//     userInput.clear();
-
-//     const errMsg = element(by.css('[ng-show="form.username.$dirty && form.username.$error.required"]'));
-//     expect(errMsg.getAttribute())    
-
-//     const loginButton = element(by.css('[ng-disabled="form.$invalid || vm.dataLoading"]'));
-
-//     expect(loginButton.isEnabled()).toBe(true);
-//   });
-// });
-
 describe('Login - Register button', function () {
-  it('should return user to registration page', function() {
+  it('should take user to registration page', function() {
     
     element(by.linkText('Register')).click();
-
-    const EC = protractor.ExpectedConditions;
-    browser.wait(EC.urlContains('http://localhost:8080/#!/register'), 5000);  
+    expect(browser.getCurrentUrl()).toEqual('http://localhost:8080/#!/register');  
   });
 });
 
@@ -120,7 +93,7 @@ describe('Login - Invalid username and pasword input', function () {
 });
 
 describe('Login - Correct username and pasword input', function () {
-  it('should return take user to homepage', function() {
+  it('should take user to homepage', function() {
     
     element(by.linkText('Register')).click();
     // Send Info
@@ -138,8 +111,9 @@ describe('Login - Correct username and pasword input', function () {
     // Click login button
     element(by.css('[ng-disabled="form.$invalid || vm.dataLoading"]')).click();
 
-    const EC = protractor.ExpectedConditions;
-    browser.wait(EC.urlContains('http://localhost:8080/#!/'), 5000);    
+    expect(browser.getCurrentUrl()).toEqual('http://localhost:8080/#!/');
+
+    browser.executeScript('window.localStorage.clear();');    
   });
 });
 
