@@ -11,13 +11,10 @@ const user = {
 - Login title
 - No input, login button disabled
 - Typing Username, Login button disabled 
-= Username required
 - Typing password only, login disabled
-- Password required
 - Incorrect user + pass => Username or password is incorrect
 - Correct user + pass => success
 - Register link goes to registration page
-
 */
 
 // Grab URL

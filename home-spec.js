@@ -6,6 +6,15 @@ const user = {
   passWord: ['fitsmind','Eric','Protractor']
 };
 
+// Home screen tests
+/*
+- Logout button
+- Greeting (single, multiple users)
+- Number of users (single, multiple users)
+- Number of users after deletion (single)
+- Display of username, first, and lastname (single, multiple users)
+*/
+
 // Clear Local Data
 afterEach(function() {
   browser.executeScript('window.sessionStorage.clear();');
@@ -276,6 +285,3 @@ describe('Home - Number of users after 1 registration, 1 deletion', function () 
     element(by.linkText('Logout')).click();
   });
 });
-
-
-
